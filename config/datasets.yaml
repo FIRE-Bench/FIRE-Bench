@@ -1,0 +1,46 @@
+datasets:
+  # FIRE datasets
+  FIRE:
+    name: "FIRE"
+    description: "FIRE Financial Evaluation Dataset"
+    path: "dataset/FIRE/FIRE.json"
+    evaluator: "fire"
+    repeat_num: 1
+
+  FIRE_SCENE:
+    name: "FIRE_SCENE"
+    description: "FIRE Scene Evaluation Dataset"
+    path: 
+      - "dataset/FIRE_SCENE/principle"
+    shuffle: False
+    evaluator: "fire_scene"
+    repeat_num: 1
+    prompt_path: "dataset/FIRE_SCENE/prompt.py"
+    prompt_name: "REF_THINK_PROMPT"
+    judge_model: "irm-32b"  # develop the FIRE-RM model name. Recommend to use the model name with "rm" in it.
+    judge_model_api_type: "default"
+    judge_model_api_key: "token1"
+    judge_model_urls: ["your_url"]
+    judge_max_tokens: 2048
+    judge_repeat_num: 1
+    judge_temperature: 0.0
+    judge_top_p: 0.7
+    judge_timeout: 300
+    judge_per_url_max_workers: 32
+    judge_system_prompt: "你是一名模型回答评估专家，擅长依据给定的评估准则对模型回复进行评判。你首先在脑海中思考解决过程，然后向用户提供最终回答。解决过程被包含在<think>与</think>标签之间，例如：\n<think>这是我的推理过程。</think>\n这是我的最终回答。"
+
+
+
+# Default evaluation settings (simplified)
+defaults:
+  temperature: 1.1
+  top_p: 0.95
+  # top_k: 20
+  max_tokens: 65000
+  timeout: 600
+  system_prompt: "You are a helpful assistant."
+  extra_body: {
+    "chat_template_kwargs": {"thinking": true},
+    "reasoning": {"enabled": true},
+    "reasoning_effort": "high"
+  }
